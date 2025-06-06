@@ -1,3 +1,15 @@
+# Liberfly
+
+## Overview
+
+This project was developed and tested only in the Linux environment.   
+The project is a Backend application with:
+
+- Backend: Laravel 12 with PHP 8.3.
+- Database: MySQL 8.
+- Docker: Containers for Laravel, NGINX and database with networking for inter-container communication.
+
+Stack docker for with skeleton application for the Laravel framework.
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -20,6 +32,71 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 - [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
+
+## Services
+PHP 8.3  
+MySQL 8.0  
+NGINX  
+
+## Requirements
+
+- **Docker** 20.10.12+
+- **Docker Compose** 1.25+
+- **GIT** 2.25.1+
+
+## How to Use
+1- Download the shellscript run command `git clone git@github.com:code-chip/liberfly.git`  
+2- Access the fold with `cd liberfly`   
+3- Fill in the values ​​of the environment variables in the .docker/.env file. It is important to fill in the correct values ​​of MY_UID and GID, to confirm your user id in Linux run the id command, the terminal should display something close to this:  
+```bash
+uid=1000(will) gid=1000(will) grupos=1000(will),4(adm),24(cdrom),27(sudo),30(dip),33(www-data),46(plugdev),100(users),105(lpadmin),125(sambashare),127(docker)
+```
+7- Run the command `bin/dev build` or `docker-compose build`.  
+8- Start services `bin/dev up` or `docker-compose up -d`.
+9- To run all of your outstanding migrations, execute the migrate Artisan command: 
+```bash
+php artisan migrate
+```  
+10-Run the db:seed command in Artisan to search your database:
+```bash
+php artisan db:seed
+``` 
+
+## How run tests
+Run the commands below to access the container and run the tests:   
+```bash
+bin/dev console php
+php artisan test
+``` 
+
+## Available development commands
+* `bin/dev build` will force (re)building the docker-compose stack.
+* `bin/dev rebuild` will update the base docker images, build the docker-compose stack, stop the running containers and restart with the freshly built images.
+* `bin/dev up`/`bin/dev start` or `bin/dev up <service>` will start the docker-compose stack.
+* `bin/dev status` will print the current status of the docker-compose stack.
+* `bin/dev restart` will restart the docker-compose stack.
+* `bin/dev logs <service>` will print the logs for the given container.
+* `bin/dev console <service>` will start a bash console inside the `app(laravel), nginx, mysql or composer` container.
+* `bin/dev stop` or `bin/dev stop <service>` will stop all running docker-compose stack containers or specify just one.
+* `bin/dev down` or `bin/dev down <service>` will stop and remove all docker-compose stack containers or specify just one.
+* `bin/dev exec --args` will start a bash console inside the `app(laravel), nginx, mysql or composer` container.
+
+## Access broswer
+Laravel application [http:localhost:8000](http:localhost:8000)  
+
+## API Documentation Project
+Acesse a documentação da API em:  
+[http://localhost:8000/api/docs](http://localhost:8000/api/docs)  
+ReDoc:  
+[http://localhost:8000/api/docs?ui=re_doc](http://localhost:8000/api/docs?ui=re_doc)  
+
+## Access information for Docker
+
+| Service Name | Container Name                               |
+|--------------|----------------------------------------------|
+| `php`        | liberfly_laravel                             |
+| `nginx`      | liberfly_nginx                               |
+| `mysql`      | liberfly_database                            |
 
 ## Learning Laravel
 
