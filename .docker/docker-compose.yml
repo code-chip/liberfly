@@ -25,6 +25,7 @@ services:
           composer config type ${COMPOSER_TYPE} && \
           rm -rf laravel-temp;
         fi
+        composer install
         php-fpm
       "     
   nginx:
