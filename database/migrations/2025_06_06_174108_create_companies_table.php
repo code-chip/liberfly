@@ -21,12 +21,12 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->string('corporateName');
-            $table->string('tradeName')->nullable();
+            $table->string('corporate_name');
+            $table->string('trade_name')->nullable();
             $table->string('phone');
             $table->string('email');
-            $table->date('openingDate')->nullable();
-            $table->string('registrationStatus');
+            $table->date('opening_date')->nullable();
+            $table->string('registration_status');
             $table->timestamps();
         });
     }

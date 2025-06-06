@@ -25,12 +25,12 @@ class CompanyFactory extends Factory
     public function definition(): array
     {
         return [
-            'corporateName' => $this->faker->company,
-            'tradeName' => $this->faker->companySuffix,
+            'corporate_name' => $this->faker->company,
+            'trade_name' => $this->faker->companySuffix,
             'phone' => $this->faker->phoneNumber,
             'email' => $this->faker->unique()->safeEmail,
-            'openingDate' => $this->faker->optional()->date(),
-            'registrationStatus' => $this->faker->randomElement(['active', 'inactive', 'pending']),
+            'opening_date' => $this->faker->optional()->date(),
+            'registration_status' => $this->faker->randomElement(['active', 'inactive', 'pending']),
         ];
     }    
 }

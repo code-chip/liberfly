@@ -14,7 +14,7 @@ use ApiPlatform\Metadata\ApiResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-#[ApiResource]
+#[ApiResource()]
 class Company extends Model
 {
     /** @use HasFactory<\Database\Factories\CompanyFactory> */
@@ -26,13 +26,13 @@ class Company extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'corporateName',
-        'tradeName',
+        'corporate_name',
+        'trade_name',
         'cnpj',
         'phone',
         'email',
-        'openingDate',
-        'registrationStatus',
+        'opening_date',
+        'registration_status',
     ];
 
 }
