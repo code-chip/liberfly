@@ -82,13 +82,13 @@ php artisan test
 * `bin/dev exec --args` will start a bash console inside the `app(laravel), nginx, mysql or composer` container.
 
 ## Access broswer
-Laravel application [http:localhost:8000](http:localhost:8000)  
+Laravel application [http://liberfly.localhost](http://liberfly.localhost)  
 
 ## API Documentation Project
 Acesse a documentação da API em:  
-[http://localhost:8000/api/docs](http://localhost:8000/api/docs)  
+[http://liberfly.localhost/api/docs](http://liberfly.localhost/api/docs)  
 ReDoc:  
-[http://localhost:8000/api/docs?ui=re_doc](http://localhost:8000/api/docs?ui=re_doc)  
+[http://liberfly.localhost/api/docs?ui=re_doc](http://liberfly.localhost/api/docs?ui=re_doc)  
 
 ## Access information for Docker
 
@@ -97,6 +97,92 @@ ReDoc:
 | `php`        | liberfly_laravel                             |
 | `nginx`      | liberfly_nginx                               |
 | `mysql`      | liberfly_database                            |
+
+## Notes
+
+### How to Enable Xdebug on the Backend with VSCode
+Requirements
+
+Make sure you have the PHP Debug extension installed:
+https://marketplace.visualstudio.com/items?itemName=xdebug.php-debug
+1. Find the Host IP in the Docker Network
+
+Run the following command on your host machine (outside the container):
+
+```bash
+ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+'
+```
+This will usually return something like:
+```bash
+172.17.0.1
+```
+2. Test if the Container Can Reach This IP
+
+Access the container shell:
+```bash
+docker exec -it montink_backend bash
+```
+Install ping and test the IP from step 1:
+```bash
+apt update && apt install iputils-ping -y && ping 172.17.0.1
+```
+If you get a response, this is the correct IP to use.
+3. Set xdebug.client_host in Your php.ini (or equivalent)
+
+Inside the container, update the Xdebug configuration:
+```bash
+echo "xdebug.client_host=172.17.0.1" >> /usr/local/etc/php/conf.d/xdebug.ini
+```
+4. Increase Timeout Limit
+
+Create a new .ini file:
+```bash
+echo "max_execution_time=6000" > /usr/local/etc/php/conf.d/99-custom-timeout.ini
+```
+Or append to an existing file:
+```bash
+echo "max_execution_time=6000" >> /usr/local/etc/php/conf.d/docker-php.ini
+```
+Verify the configuration:
+```bash
+php --ini
+```
+Or check via /phpinfo.
+5. Restart the Container
+
+Restart the container (or restart Apache inside the container) to apply the changes.
+6. Configure Path Mappings in .vscode/launch.json
+
+In the root of your project, update your .vscode/launch.json to include the correct absolute path:
+```bash
+"pathMappings": {
+  "/var/www/html": "${workspaceFolder}"
+}
+```
+
+---
+
+## Troubleshooting
+
+- Ensure Docker daemon is running.
+- Check container logs with:
+
+```bash
+docker-compose logs php
+docker-compose logs mysql
+docker-compose logs vuejs
+```
+or
+```bash
+docker logs montink_backend
+docker logs montink_database
+docker logs montink_frontend
+```
+
+- Ports 8000 and 3000 must be free on your machine.
+
+---
+
 
 ## Learning Laravel
 
